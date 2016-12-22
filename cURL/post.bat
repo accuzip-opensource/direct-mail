@@ -1,1 +1,1 @@
-curl -X POST -H "Cache-Control: no-cache" -H "Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW" -F "backOfficeOption=json" -F "apiKey=<YourDirectMailAPIkey>" -F "callbackURL=<YourWebHookCallback>" -F "guid=" -F "file=@C:\360\sample_2k.csv" "<DirectMailURL>"
+curl -X POST -H "Cache-Control: no-cache" -H "Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW" -F "backOfficeOption=json" -F "apiKey=<YourDirectMailAPIkey>" -F "callbackURL=<YourWebHookCallback>" -F "guid=" -F "file=@C:\360\sample.csv" "<DirectMailURL>"
