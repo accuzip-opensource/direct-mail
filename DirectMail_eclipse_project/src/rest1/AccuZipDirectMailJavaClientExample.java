@@ -43,7 +43,7 @@ public class AccuZipDirectMailJavaClientExample {
 	/**
 	 * your API KEY
 	 */
-	private static final String API_KEY = "your api_key";
+	private static final String API_KEY = "your api_key";	
 
 	private Client client = null;
 
@@ -69,13 +69,22 @@ public class AccuZipDirectMailJavaClientExample {
 	 * 
 	 *  more documentation = >  https://speca.io/accuzip/accuzip-360#upload-file<br>
 	 * 
-	 * @return String JSON<br>
+	 * @return String guid<br>
+	 * @throws Exception 
 	 */
-	public String upLoadFile(File input_file){
+	public String upLoadFile(File input_file) throws Exception{
 		
 		
 		String guid = "";
 		try{
+			
+			if(AccuZipDirectMailJavaClientExample.API_KEY == null || AccuZipDirectMailJavaClientExample.API_KEY.trim().length() == 0
+					|| AccuZipDirectMailJavaClientExample.API_KEY.equals("your api_key")){
+				throw new Exception("Bad API_KEY. Current value of API_KEY is:" + AccuZipDirectMailJavaClientExample.API_KEY);
+			}else if(input_file == null || !input_file.exists()){
+				throw new Exception("Bad input file. Current input file is:" + input_file);
+			}
+			
 			String url = "https://cloud2.iaccutrace.com/ws_360_webapps/v2_0/uploadProcess.jsp?manual_submit=false";
 
 			WebResource webResource = client.resource(url);
@@ -108,7 +117,8 @@ public class AccuZipDirectMailJavaClientExample {
 			
 
 		}catch(Exception e){
-			e.printStackTrace();
+			
+			throw e;
 		}
 		return guid;
 	}
@@ -145,8 +155,9 @@ public class AccuZipDirectMailJavaClientExample {
 	 * 
 	 * more documentation = > https://speca.io/accuzip/accuzip-360#get-quote<br>
 	 * @return String JSON<br>
+	 * @throws Exception 
 	 */
-	public String getQuote(String guid){
+	public String getQuote(String guid) throws Exception{
 		
 		String result = "";
 		StringBuffer sb = new StringBuffer();
@@ -163,7 +174,8 @@ public class AccuZipDirectMailJavaClientExample {
 			result = webResource.type("*/*").accept("*/*").get(String.class);
 			
 		}catch(Exception e){
-			e.printStackTrace();
+			
+			throw e;
 		}
 		return result;
 	}
@@ -174,8 +186,9 @@ public class AccuZipDirectMailJavaClientExample {
 	 *  
 	 *  more documentation = >  https://speca.io/accuzip/accuzip-360#update-quote<br>
 	 *  @return String
+	 * @throws Exception 
 	 */
-	public String updateQuote(String guid){
+	public String updateQuote(String guid) throws Exception{
 				
 				String response = "";
 				StringBuffer sb = new StringBuffer();
@@ -193,7 +206,8 @@ public class AccuZipDirectMailJavaClientExample {
 					response = webResource.type("*/*").accept("*/*").put(String.class, buildPresortParameters());
 					
 				}catch(Exception e){
-					e.printStackTrace();
+					
+					throw e;
 				}
 				
 				return response;
@@ -207,8 +221,9 @@ public class AccuZipDirectMailJavaClientExample {
 			 * 
 			 * @param guid
 			 * @return String JSON
+			 * @throws Exception 
 			 */
-			public String  runCass_Dups_01_Presort(String guid){
+			public String  runCass_Dups_01_Presort(String guid) throws Exception{
 				String response = "";
 				
 				StringBuffer sb = new StringBuffer();
@@ -226,7 +241,8 @@ public class AccuZipDirectMailJavaClientExample {
 					response = webResource.type("*/*").accept("*/*").get(String.class);
 					
 				}catch(Exception e){
-					e.printStackTrace();
+					
+					throw e;
 				}
 				
 				return response;
@@ -405,28 +421,30 @@ public class AccuZipDirectMailJavaClientExample {
 
 	/**
 	 * @param args
+	 * @throws Exception 
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		String response = null;
 		try{
 			AccuZipDirectMailJavaClientExample ac = new AccuZipDirectMailJavaClientExample();
 
 //			File input = new File("C:\\myDocs\\servoyDevelopmentStuff\\AZ_testing\\Cass postman\\Postman rest webservice stuff\\Proof of Concept Rest API Calls\\sample_2k.csv");
-//			 response = ac.upLoadFile(input);
+			File input = new File("sample_2k.csv");
+			String guid = ac.upLoadFile(input);
 			
 			
-//			 response = ac.getQuote("09ea7df1-7673-47fe-a0e0-c6e024bcb231");
+			 response = ac.getQuote(guid);
 
 			
 			
-//		     response = ac.updateQuote("09ea7df1-7673-47fe-a0e0-c6e024bcb231");
+		     response = ac.updateQuote(guid);
 			
 			
-//			  response = ac.runCass_Dups_01_Presort("09ea7df1-7673-47fe-a0e0-c6e024bcb231");
+			  response = ac.runCass_Dups_01_Presort(guid);
 
 			
 			//check status
-//			 response = ac.getQuote("01cc52f8-2aa9-41f0-8ee3-29ba106d9056");
+			 response = ac.getQuote(guid);
 			
 			
 			
@@ -435,7 +453,8 @@ public class AccuZipDirectMailJavaClientExample {
 			
 			
 		}catch(Exception e){
-			e.printStackTrace();
+			
+			throw e;
 		}
 
 	}
