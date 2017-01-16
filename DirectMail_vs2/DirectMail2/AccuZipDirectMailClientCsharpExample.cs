@@ -27,8 +27,7 @@ public class AccuZipDirectMailCsharpClientExample
     /**
      * Your API KEY
      */
-   // private static readonly string API_KEY = "your api key";
-    private static readonly string API_KEY = "07D6E6EA-F3A6-4021-9C93-6E3C0987BA34";
+   private static readonly string API_KEY = "your api key";    
    
     public AccuZipDirectMailCsharpClientExample()
     {
