@@ -8,6 +8,8 @@
     /**
      * Your API KEY
      */
-   private static readonly string API_KEY = "your api key";    
+   private static readonly string API_KEY = "your api key";   
+   
+   (3)  need to copy the sample_2k.csv file to DirectMail2\bin\Debug where the solution is location on your hard drive. 
  
   
