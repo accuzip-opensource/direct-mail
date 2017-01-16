@@ -1,0 +1,13 @@
+(1) Prerequistes
+	 NuGet Package Manager (if you don't have it then in visual studio goto "Tools/Extension Manager" look for NuGet (install it)
+
+(2) Edit the AccuZipDirectMailCsharpClientExample.cs => replace your api key with a real api_key
+
+ public class AccuZipDirectMailCsharpClientExample
+{
+    /**
+     * Your API KEY
+     */
+   private static readonly string API_KEY = "your api key";    
+ 
+  
