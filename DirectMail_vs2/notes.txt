@@ -5,15 +5,10 @@ Download from https://github.com/accuzip-opensource/direct-mail/tree/DirectMail_
 
 (2) From visual studio "File/Open/Project/Solution
 
-(2) Edit the AccuZipDirectMailCsharpClientExample.cs => replace your api key with a real api_key
+(2) Edit the Program.cs => replace your api key with a real api_key
 
- public class AccuZipDirectMailCsharpClientExample
-{
-    /**
-     * Your API KEY
-     */
-   private static readonly string API_KEY = "your api key";   
+	 AccuZipDirectMailCsharpClientExample azdm = new AccuZipDirectMailCsharpClientExample("your api_key");
    
-   (3)  need to copy the sample_2k.csv file to DirectMail2\bin\Debug where the solution is location on your hard drive. 
+   
  
   
