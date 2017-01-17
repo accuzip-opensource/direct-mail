@@ -1,6 +1,10 @@
 package rest1;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 
 import javax.ws.rs.core.MediaType;
 
@@ -39,6 +43,9 @@ import com.sun.jersey.multipart.impl.MultiPartWriter;
  *<br>
  */
 public class AccuZipDirectMailJavaClientExample {
+	
+	 final  String url_base = "https://cloud2.iaccutrace.com/servoy-service/rest_ws/ws_360/v2_0/job/";
+	 
 
 	/**
 	 * your API KEY
@@ -74,7 +81,7 @@ public class AccuZipDirectMailJavaClientExample {
 	 * @throws Exception 
 	 */
 	public String upLoadFile(File input_file) throws Exception{
-		
+				
 		
 		String guid = "";
 		try{
@@ -163,10 +170,8 @@ public class AccuZipDirectMailJavaClientExample {
 		String result = "";
 		StringBuffer sb = new StringBuffer();
 
-		String url_base = "https://cloud2.iaccutrace.com/servoy-service/rest_ws/ws_360/v2_0/job/";
-
 		try{
-			sb.append(url_base);
+			sb.append(this.url_base);
 			sb.append(guid);
 			sb.append("/QUOTE");
 			String url = sb.toString();
@@ -192,10 +197,9 @@ public class AccuZipDirectMailJavaClientExample {
 	public String updateQuote(String guid) throws Exception{
 				
 				String response = "";
-				StringBuffer sb = new StringBuffer();
-				String url_base = "https://cloud2.iaccutrace.com/servoy-service/rest_ws/ws_360/v2_0/job/";				
+				StringBuffer sb = new StringBuffer();				
 						
-				sb.append(url_base);
+				sb.append(this.url_base);
 				sb.append(guid);
 				sb.append("/QUOTE");
 				
@@ -227,10 +231,9 @@ public class AccuZipDirectMailJavaClientExample {
 			public String  runCass_Dups_01_Presort(String guid) throws Exception{
 				String response = "";
 				
-				StringBuffer sb = new StringBuffer();
-				String url_base = "https://cloud2.iaccutrace.com/servoy-service/rest_ws/ws_360/v2_0/job/";				
+				StringBuffer sb = new StringBuffer();				
 						
-				sb.append(url_base);
+				sb.append(this.url_base);
 				sb.append(guid);
 				sb.append("/CASS-NCOA-DUPS_01-PRESORT");
 				
@@ -249,6 +252,64 @@ public class AccuZipDirectMailJavaClientExample {
 				return response;
 				
 			}
+			
+			/**
+			 * 
+			 * more documentation => https://speca.io/accuzip/accuzip-360#download-print-ready-presorted-csv<br>
+			 * 
+			 * @param guid
+			 * @return
+			 * @throws Exception
+			 */
+			public String downLoadPreviewCSV(String guid, File fileout) throws Exception{
+				String response = "";
+						
+				String url = "https://cloud2.iaccutrace.com/ws_360_webapps/v2_0/download.jsp?guid=" + guid + "&ftype=prev.csv";
+								
+				InputStream is = null;
+				BufferedInputStream bis = null;
+				FileOutputStream fos = null;
+				BufferedOutputStream bos = null;
+				
+				try{
+					WebResource webResource = client.resource(url);
+
+					/**
+					 * write file
+					 * 
+					 */
+					is = webResource.type("*/*").accept("*/*").get(InputStream.class);
+					byte[] data = new byte[4096];
+					bis = new BufferedInputStream(is);
+					fos = new FileOutputStream(fileout);
+					bos = new BufferedOutputStream(fos);
+					int count;
+					while ((count = bis.read(data, 0, 4096)) != -1) {
+						bos.write(data, 0, count);
+					}
+
+					bos.flush();
+					bos.close();
+					response = "Download Presort CSV to => " + fileout.getAbsolutePath();
+					
+				}catch(Exception e){
+					throw e;
+				}finally{
+					if (is != null) {
+						is.close();
+					}
+					if (bis != null) {
+						bis.close();
+					}
+					if (fos != null) {
+						fos.close();
+					}
+				}
+				
+				
+			  return response;	
+			}
+			
 			
 			/**
 			 * Example of populating the Presort parameters for a mailing. Used with updateQuote<br>
@@ -448,11 +509,61 @@ public class AccuZipDirectMailJavaClientExample {
 			
 			//check status
 			 response = ac.getQuote(guid);
+			 
+			 	JSONParser parser = new JSONParser();
+				Object obj = parser.parse(response);
+				JSONObject jsonObject = (JSONObject)obj;
+				String success = jsonObject.get("success").toString();
+				
+				if(success.equals("false")){
+					 System.out.println("response => " + response);
+					 return;					 
+				 }
+				
+				String task = "";
+				if(jsonObject.get("task_name") != null){
+					task = jsonObject.get("task_name").toString();
+				}
+				
+				String percent_completed = "0";
+				if(task.equals("PRESORT")){
+					percent_completed = jsonObject.get("task_percentage_completed").toString();
+				}
+				
+				
+			 
+			while(!percent_completed.equals("100")){
+				//check status
+				 response = ac.getQuote(guid);
+				 
+//				JSONParser parser = new JSONParser();
+				 obj = parser.parse(response);
+				 jsonObject = (JSONObject)obj;
+				 success = jsonObject.get("success").toString();
+				 
+				 if(success.equals("false")){
+					 System.out.println("response => " + response);
+					 return;					 
+				 }
+				 
+				 if(jsonObject.get("task_name") != null){
+						task = jsonObject.get("task_name").toString();
+					}
+				 
+				 if(jsonObject.get("task_percentage_completed") != null){
+						percent_completed = jsonObject.get("task_percentage_completed").toString();
+					}
+								
+				 Thread.sleep(20000);
+			 }
 			
-			
+			 
+			 File fileout = new File("prev_presort.csv");
+			response = ac.downLoadPreviewCSV(guid, fileout);
 			
 			
 			System.out.println("response => " + response);
+			System.out.println("process finished");
 			
 			
 		}catch(Exception e){
