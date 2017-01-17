@@ -27,11 +27,11 @@ public class AccuZipDirectMailCsharpClientExample
     /**
      * Your API KEY
      */
-   private static readonly string API_KEY = "your api key";    
+   public   string API_KEY = "your api key";    
    
-    public AccuZipDirectMailCsharpClientExample()
+    public AccuZipDirectMailCsharpClientExample(string api_key)
     {
-
+        this.API_KEY = api_key;
     }
 
     /**
@@ -51,10 +51,10 @@ public class AccuZipDirectMailCsharpClientExample
 
         try
         {
-            if (AccuZipDirectMailCsharpClientExample.API_KEY == null || AccuZipDirectMailCsharpClientExample.API_KEY.Length == 0 ||
-                AccuZipDirectMailCsharpClientExample.API_KEY.Equals("your api key"))
+            if (this.API_KEY == null || this.API_KEY.Length == 0 ||
+                this.API_KEY.Equals("your api key"))
             {
-                throw new Exception("Api Key required. The Api Key currently is => " + AccuZipDirectMailCsharpClientExample.API_KEY);
+                throw new Exception("Api Key required. The Api Key currently is => " + this.API_KEY);
             }
 
             if (input_file.Exists)
@@ -66,7 +66,7 @@ public class AccuZipDirectMailCsharpClientExample
                 request.AddHeader("content-type", "multipart/form-data");
 
                 request.AddParameter("backOfficeOption", "json");
-                request.AddParameter("apiKey", AccuZipDirectMailCsharpClientExample.API_KEY);
+                request.AddParameter("apiKey", this.API_KEY);
                 request.AddParameter("callbackURL", "https://cloud2.iaccutrace.com/360_callBack_web_hook/callBack.jsp");
                 request.AddParameter("guid", "");
 

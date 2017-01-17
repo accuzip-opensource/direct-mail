@@ -12,7 +12,7 @@ namespace DirectMail2
         {
             string response = "";
 
-            AccuZipDirectMailCsharpClientExample azdm = new AccuZipDirectMailCsharpClientExample();
+            AccuZipDirectMailCsharpClientExample azdm = new AccuZipDirectMailCsharpClientExample("your api_key");
 
             /*
              * Upload file
