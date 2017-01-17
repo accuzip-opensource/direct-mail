@@ -5,7 +5,7 @@ Download from https://github.com/accuzip-opensource/direct-mail/tree/DirectMail_
 
 (2) From visual studio "File/Open/Project/Solution
 
-(2) Edit the Program.cs => replace your api key with a real api_key
+(3) Edit the Program.cs => replace your api key with a real api_key
 
 	 AccuZipDirectMailCsharpClientExample azdm = new AccuZipDirectMailCsharpClientExample("your api_key");
    
