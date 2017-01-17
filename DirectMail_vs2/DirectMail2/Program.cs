@@ -16,8 +16,7 @@ namespace DirectMail2
 
             /*
              * Upload file
-             */
-            //FileInfo fi = new FileInfo("C:\\myDocs\\servoyDevelopmentStuff\\AZ_testing\\Cass postman\\Postman rest webservice stuff\\Proof of Concept Rest API Calls\\sample_2k.csv");
+             */            
             FileInfo fi = new FileInfo("sample_2k.csv");
             string guid = azdm.upLoadFile(fi);
 
