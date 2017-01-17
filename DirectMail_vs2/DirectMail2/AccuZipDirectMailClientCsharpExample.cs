@@ -87,7 +87,7 @@ public class AccuZipDirectMailCsharpClientExample
                 if (response.Content != null && response.Content.Contains("html"))
                 {
                     result = response.Content;
-                    return result;
+                    throw new Exception("error => " + result);
                 }
 
                 result = response.Content;
