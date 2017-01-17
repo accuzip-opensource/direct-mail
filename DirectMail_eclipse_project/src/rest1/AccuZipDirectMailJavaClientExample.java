@@ -43,11 +43,12 @@ public class AccuZipDirectMailJavaClientExample {
 	/**
 	 * your API KEY
 	 */
-	private static final String API_KEY = "your api_key";	
+	public String api_key = "your api_key";	
 
 	private Client client = null;
 
-	public AccuZipDirectMailJavaClientExample() throws Exception{
+	public AccuZipDirectMailJavaClientExample(String api_key) throws Exception{
+		this.api_key = api_key;
 		initClient();
 	}
 
@@ -78,9 +79,9 @@ public class AccuZipDirectMailJavaClientExample {
 		String guid = "";
 		try{
 			
-			if(AccuZipDirectMailJavaClientExample.API_KEY == null || AccuZipDirectMailJavaClientExample.API_KEY.trim().length() == 0
-					|| AccuZipDirectMailJavaClientExample.API_KEY.equals("your api_key")){
-				throw new Exception("Bad API_KEY. Current value of API_KEY is:" + AccuZipDirectMailJavaClientExample.API_KEY);
+			if(this.api_key == null || this.api_key.trim().length() == 0
+					|| this.api_key.equals("your api_key")){
+				throw new Exception("Bad API_KEY. Current value of API_KEY is:" + this.api_key);
 			}else if(input_file == null || !input_file.exists()){
 				throw new Exception("Bad input file. Current input file is:" + input_file);
 			}
@@ -92,7 +93,7 @@ public class AccuZipDirectMailJavaClientExample {
 			FormDataMultiPart formDataMultiPart = new FormDataMultiPart();
 
 			formDataMultiPart.field("backOfficeOption", "json",  MediaType.TEXT_PLAIN_TYPE);
-			formDataMultiPart.field("apiKey", AccuZipDirectMailJavaClientExample.API_KEY,  MediaType.TEXT_PLAIN_TYPE);
+			formDataMultiPart.field("apiKey", this.api_key,  MediaType.TEXT_PLAIN_TYPE);
 			formDataMultiPart.field("callbackURL", "https://cloud2.iaccutrace.com/360_callBack_web_hook/callBack.jsp",  MediaType.TEXT_PLAIN_TYPE);
 			formDataMultiPart.field("guid", "",  MediaType.TEXT_PLAIN_TYPE);
 			
@@ -426,9 +427,11 @@ public class AccuZipDirectMailJavaClientExample {
 	public static void main(String[] args) throws Exception {
 		String response = null;
 		try{
-			AccuZipDirectMailJavaClientExample ac = new AccuZipDirectMailJavaClientExample();
+			/**
+			 * your API KEY
+			 */
+			AccuZipDirectMailJavaClientExample ac = new AccuZipDirectMailJavaClientExample("your api key");
 
-//			File input = new File("C:\\myDocs\\servoyDevelopmentStuff\\AZ_testing\\Cass postman\\Postman rest webservice stuff\\Proof of Concept Rest API Calls\\sample_2k.csv");
 			File input = new File("sample_2k.csv");
 			String guid = ac.upLoadFile(input);
 			
