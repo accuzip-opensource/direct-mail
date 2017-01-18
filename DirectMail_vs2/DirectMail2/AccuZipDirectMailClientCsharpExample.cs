@@ -24,6 +24,8 @@ using Newtonsoft;
  */
 public class AccuZipDirectMailCsharpClientExample
 {
+    private  string url_base = "https://cloud2.iaccutrace.com/servoy-service/rest_ws/ws_360/v2_0/job/";
+
     /**
      * Your API KEY
      */
@@ -150,13 +152,12 @@ public class AccuZipDirectMailCsharpClientExample
      */
     public string getQuote(string guid)
     {
-        string result = "";
-        string url_base = "https://cloud2.iaccutrace.com/servoy-service/rest_ws/ws_360/v2_0/job/";
+        string result = "";       
 
         RestClient rc = new RestClient();
 
         StringBuilder sb = new StringBuilder();
-        sb.Append(url_base);
+        sb.Append(this.url_base);
         sb.Append(guid);
         sb.Append("/QUOTE");
         string url = sb.ToString();
@@ -191,10 +192,9 @@ public class AccuZipDirectMailCsharpClientExample
     {
         string result = "";
 
-        StringBuilder sb = new StringBuilder();
-        string url_base = "https://cloud2.iaccutrace.com/servoy-service/rest_ws/ws_360/v2_0/job/";
+        StringBuilder sb = new StringBuilder();        
 
-        sb.Append(url_base);
+        sb.Append(this.url_base);
         sb.Append(guid);
         sb.Append("/QUOTE");
 
@@ -231,10 +231,9 @@ public class AccuZipDirectMailCsharpClientExample
     {
         string result = "";
 
-        StringBuilder sb = new StringBuilder();
-        string url_base = "https://cloud2.iaccutrace.com/servoy-service/rest_ws/ws_360/v2_0/job/";
+        StringBuilder sb = new StringBuilder();        
 
-        sb.Append(url_base);
+        sb.Append(this.url_base);
         sb.Append(guid);
         sb.Append("/CASS-NCOA-DUPS_01-PRESORT");
 
@@ -252,6 +251,45 @@ public class AccuZipDirectMailCsharpClientExample
         catch (Exception e)
         {
             throw e;
+        }
+
+        return result;
+    }
+
+    public string downLoadPreviewCSV(string guid, FileInfo fileout)
+    {
+        string result = "";
+
+        string url = "https://cloud2.iaccutrace.com/ws_360_webapps/v2_0/download.jsp?guid=" + guid + "&ftype=prev.csv";
+
+        FileStream fs = null;
+        RestClient rc = new RestClient();
+        try
+        {
+            //rc.BaseUrl = new Uri(url);
+            //RestRequest request = new RestRequest(Method.GET);
+            //IRestResponse response = rc.Execute(request);
+
+            //result = response.Content;
+
+            rc.BaseUrl = new Uri(url);
+            RestRequest request = new RestRequest(Method.GET);
+            byte[] bytes = rc.DownloadData(request);
+            fs = fileout.OpenWrite();
+            fs.Write(bytes, 0, bytes.Length);
+            result = "download presort CSV to => " + fileout.FullName;
+
+        }
+        catch (Exception e)
+        {
+            throw e;
+        }
+        finally
+        {
+            if(fs != null){
+                fs.Flush();
+                fs.Close();
+            }
         }
 
         return result;
