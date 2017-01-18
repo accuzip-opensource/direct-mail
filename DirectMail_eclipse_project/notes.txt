@@ -1,0 +1,8 @@
+1.	Download DirectMail_eclipse_project  from https://github.com/accuzip-opensource/direct-mail/tree/DirectMail_eclipse_project 
+2.	Open eclipse, then import downloaded project DirectMail_eclipse_project  (File/Import/General/Existing Projects into Workspace)
+
+3.	Enter your api_key in main() =>
+/**
+			 * your API KEY
+			 */
+			AccuZipDirectMailJavaClientExample ac = new AccuZipDirectMailJavaClientExample("your api key");
