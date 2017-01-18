@@ -515,7 +515,7 @@ public class AccuZipDirectMailJavaClientExample {
 				JSONObject jsonObject = (JSONObject)obj;
 				String success = jsonObject.get("success").toString();
 				
-				if(success.equals("false")){
+				if(!success.equalsIgnoreCase("true")){
 					 System.out.println("response => " + response);
 					 return;					 
 				 }
@@ -531,6 +531,7 @@ public class AccuZipDirectMailJavaClientExample {
 				}
 				
 				
+			 int time_count = 0;
 			 
 			while(!percent_completed.equals("100")){
 				//check status
@@ -541,7 +542,7 @@ public class AccuZipDirectMailJavaClientExample {
 				 jsonObject = (JSONObject)obj;
 				 success = jsonObject.get("success").toString();
 				 
-				 if(success.equals("false")){
+				 if(!success.equalsIgnoreCase("true")){
 					 System.out.println("response => " + response);
 					 return;					 
 				 }
@@ -555,6 +556,11 @@ public class AccuZipDirectMailJavaClientExample {
 					}
 								
 				 Thread.sleep(20000);
+				 if(time_count > 300000){
+					 throw new Exception("process may be stalled");
+				 }
+				 
+				 System.out.println("task:" + task);
 			 }
 			
 			 
