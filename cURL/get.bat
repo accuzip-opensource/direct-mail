@@ -1,1 +1,0 @@
-curl -X GET -H "Content-Type: application/json" -H "Cache-Control: no-cache" "<DirectMailURL>"
