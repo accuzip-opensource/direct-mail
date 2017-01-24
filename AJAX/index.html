@@ -1,0 +1,168 @@
+<html>
+<head>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+</head>
+<body>
+<form name="directMailForm" id="directMailForm" action="http://cloud2.iaccutrace.com/ws_360_webapps/uploadProcess.jsp?manual_submit=false" method="POST" enctype="multipart/form-data">	
+	Back office option: <input type="text" name="backOfficeOption" value="json"/> <br/>
+	Your API_KEY: <input type="text" size="40" name="apiKey" value="" /> <br/>
+	GUID: <input type="text" name="callbackURL" value="http://testwebsite.test" /> <br/>
+	Callback: <input type="text" name="guid" value='' /> <br/>
+	FileName:<input type="file" name="file" /> <br/>
+	<input type="text" name="async" value="async" disabled='disabled' /> <br/>
+</form>	
+
+<input type="button" id="DirectMailUpload" value="Upload"></input>
+<div id="directMailStatus"></div>
+
+<script>
+$(document).ready(function()
+{
+	$("#directMailForm").submit( function(e)
+	{
+		var baseURL = "http://cloud2.iaccutrace.com"
+	
+		$("#directMailStatus").html("uploading...");
+
+		var formObj = $(this);
+		var formURL = formObj.attr( "action" );
+		
+		var formData = new FormData(this);
+		$.ajax({
+			url: formURL,
+			type: 'POST',
+			data:  formData,
+			mimeType:"multipart/form-data",
+			contentType: false,
+			cache: false,
+			processData:false,
+			success: function(data, textStatus, jqXHR)
+			{
+				$("#directMailStatus").html('<pre><code>'+data+'</code></pre>');
+				var uploadResultObj = JSON.parse( data )
+				console.log( uploadResultObj )
+				//	update QUOTE
+				var putURL = baseURL+'/servoy-service/rest_ws/ws_360/v2_0/job/'+uploadResultObj.guid+'/QUOTE';    
+				$.ajax({
+					url: putURL,
+					async: true,
+					crossDomain: true,
+					method: "PUT",
+					headers: {
+						"content-type": "application/json",
+						"cache-control": "no-cache"													
+					},
+					data: JSON.stringify( { 
+						"success": "true",
+						"presort_class": "FIRST CLASS",
+						"drop_zip": "93422",
+						"mail_piece_size": "CARD",
+						"piece_height": "4.00",
+						"piece_length": "5.00",
+						"thickness_value": ".009",
+						"thickness_based_on": "1",
+						"tray_type": "MMM",
+						"calculate_container_volume": "1",
+						"min1ft": "",
+						"max1ft": "",
+						"min2ft": "",
+						"max2ft": "",
+						"print_barcode": "1",
+						"print_imb": "1",
+						"machinability": "MACHINABLE",
+						"weight_value": ".2",
+						"weight_unit": "OUNCES",
+						"weight_based_on": "1",
+						"mail_permit_type": "PROFIT",
+						"mail_pay_method": "IMPRINT",
+						"include_non_zip4": "1",
+						"include_crrt": "0",
+						"print_reverse": "0",
+						"entry_scf": "0",
+						"entry_ndc": "0",
+						"agent_or_mailer_signing_statement": "",
+						"agent_or_mailer_company": "",
+						"agent_or_mailer_phone": "",
+						"agent_or_mailer_email": "",
+						"mailing_agent_name_address": "",
+						"mailing_agent_phone": "8054617300",
+						"mailing_agent_mailer_id": "999999",
+						"mailing_agent_crid": "8888888",
+						"mailing_agent_edoc_sender_crid": "8888888",
+						"prepared_for_name_address": "",
+						"prepared_for_mailer_id": "999999",
+						"prepared_for_crid": "8888888",
+						"prepared_for_nonprofit_authorization_number": "",
+						"permit_holder_name_address": "",
+						"permit_holder_phone": "8054617300",
+						"permit_holder_mailer_id": "999999",
+						"permit_holder_crid": "8888888",
+						"statement_number": "1",
+						"mailing_date": "08/20/2014",
+						"mail_permit_number": "199",
+						"net_postage_due_permit_number": "",
+						"postage_affixed": "",
+						"exact_postage": "",
+						"imb_default_mid": "999999",
+						"imb_mid": "999999",
+						"imb_starting_serial_number": "",
+						"imb_service_type": "270",
+						"maildat_pdr": "0",
+						"maildat_mpu_name": "JOB1",
+						"maildat_mpu_description": "TEST JOB",
+						"accutrace_job_description": "TEST JOB",
+						"accutrace_job_id": "123456",
+						"accutrace_job_id2": "789",
+						"accutrace_notice_email": "",
+						"accutrace_customer_id": "",
+						"accutrace_api_key": "",
+						"format": "UPPER",
+						"list_owner_paf_id": "E00001",
+						"list_owner_information": "company|address|city|state|zip+4|telephone|naics|email|name|title|08/01/2014",
+						"total_postage": "",
+						"postage_saved": "",
+						"First_Class_Card": "",
+						"First_Class_Letter": "",
+						"First_Class_Flat": "",
+						"Standard_Card": "",
+						"Standard_Letter": "",
+						"Standard_Flat": "",
+						"northsouth":"4"					
+					} ),
+					success: function(){													
+						var getURL = baseURL+'/servoy-service/rest_ws/ws_360/v2_0/job/'+uploadResultObj.guid+'/QUOTE'; 
+						$.get( getURL, function( data ) {	//	get QUOTE
+							console.log( data );
+							
+							var cassNcoaDups01presortURL = baseURL+'/servoy-service/rest_ws/ws_360/v2_0/job/'+uploadResultObj.guid+'/CASS-NCOA-DUPS_01-PRESORT'; 
+							$.get( cassNcoaDups01presortURL, function( data ) {	//	get CASS-NCOA-DUPS_01-PRESORT
+								console.log( data );								
+							}); 								
+						});  
+					},
+					error: function (jqXHR, exception) {
+						console.log( jqXHR )
+						console.log( exception )
+					}
+				});  							
+			},
+			error: function(jqXHR, textStatus, errorThrown) 
+			{
+				$("#directMailStatus").html('<pre><code class="prettyprint">Direct Mail Process ERROR!<br/> textStatus='+textStatus+', errorThrown='+errorThrown+'</code></pre>');
+			} 	        
+		});
+		e.preventDefault();
+//        e.unbind();
+
+	} );
+
+	$("#DirectMailUpload").click(function()
+	{			
+		$("#directMailForm").submit();		
+	});
+
+});
+</script>
+
+</body>
+</html>
