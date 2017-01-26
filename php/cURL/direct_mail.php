@@ -36,129 +36,137 @@ if ( isset($_POST[ 'submit' ]) && $_POST[ 'submit' ] )
     curl_setopt( $ch, CURLOPT_POSTFIELDS, $args );
     
     $result = curl_exec($ch);
-//    echo $result;
+    echo $result;
 	$bodyVarObj = json_decode( $result );	
 	
 //	updateQUOTE
 	$curl = curl_init();
-	$url = $baseURL.'/servoy-service/rest_ws/ws_360/job/'.$bodyVarObj->guid.'/QUOTE';		
-	$quoteUpdate = array(
-		"success" => "true",
-		"presort_class" => "FIRST CLASS",
-		"drop_zip" => "93422",
-		"mail_piece_size" => "CARD",
-		"piece_height" => "4.00",
-		"piece_length" => "5.00",
-		"thickness_value" => ".009",
-		"thickness_based_on" => "1",
-		"tray_type" => "MMM",
-		"calculate_container_volume" => "1",
-		"min1ft" => "",
-		"max1ft" => "",
-		"min2ft" => "",
-		"max2ft" => "",
-		"print_barcode" => "1",
-		"print_imb" => "1",
-		"machinability" => "MACHINABLE",
-		"weight_value" => ".2",
-		"weight_unit" => "OUNCES",
-		"weight_based_on" => "1",
-		"mail_permit_type" => "PROFIT",
-		"mail_pay_method" => "IMPRINT",
-		"include_non_zip4" => "1",
-		"include_crrt" => "0",
-		"print_reverse" => "0",
-		"entry_scf" => "0",
-		"entry_ndc" => "0",
-		"agent_or_mailer_signing_statement" => "",
-		"agent_or_mailer_company" => "",
-		"agent_or_mailer_phone" => "",
-		"agent_or_mailer_email" => "",
-		"mailing_agent_name_address" => "",
-		"mailing_agent_phone" => "",
-		"mailing_agent_mailer_id" => "999999",
-		"mailing_agent_crid" => "8888888",
-		"mailing_agent_edoc_sender_crid" => "8888888",
-		"prepared_for_name_address" => "",
-		"prepared_for_mailer_id" => "999999",
-		"prepared_for_crid" => "8888888",
-		"prepared_for_nonprofit_authorization_number" => "",
-		"permit_holder_name_address" => "",
-		"permit_holder_phone" => "8054617300",
-		"permit_holder_mailer_id" => "999999",
-		"permit_holder_crid" => "8888888",
-		"statement_number" => "1",
-		"mailing_date" => "08/20/2014",
-		"mail_permit_number" => "199",
-		"net_postage_due_permit_number" => "",
-		"postage_affixed" => "",
-		"exact_postage" => "",
-		"imb_default_mid" => "999999",
-		"imb_mid" => "999999",
-		"imb_starting_serial_number" => "",
-		"imb_service_type" => "270",
-		"maildat_pdr" => "0",
-		"maildat_mpu_name" => "JOB1",
-		"maildat_mpu_description" => "TEST JOB",
-		"accutrace_job_description" => "TEST JOB",
-		"accutrace_job_id" => "123456",
-		"accutrace_job_id2" => "789",
-		"accutrace_notice_email" => "",
-		"accutrace_customer_id" => "",
-		"accutrace_api_key" => "",
-		"format" => "UPPER",
-		"list_owner_paf_id" => "E00001",
-		"list_owner_information" => "company|address|city|state|zip+4|telephone|naics|email|name|title|08/01/2014",
-		"total_postage" => "",
-		"postage_saved" => "",
-		"First_Class_Card" => "",
-		"First_Class_Letter" => "",
-		"First_Class_Flat" => "",
-		"Standard_Card" => "",
-		"Standard_Letter" => "",
-		"Standard_Flat" => "",
-		"northsouth" => "4"		
-	);	
+	if( isset($bodyVarObj->guid) )
+	{
+		$url = $baseURL.'/servoy-service/rest_ws/ws_360/job/'.$bodyVarObj->guid.'/QUOTE';		
+		$quoteUpdate = array(
+			"success" => "true",
+			"presort_class" => "FIRST CLASS",
+			"drop_zip" => "93422",
+			"mail_piece_size" => "CARD",
+			"piece_height" => "4.00",
+			"piece_length" => "5.00",
+			"thickness_value" => ".009",
+			"thickness_based_on" => "1",
+			"tray_type" => "MMM",
+			"calculate_container_volume" => "1",
+			"min1ft" => "",
+			"max1ft" => "",
+			"min2ft" => "",
+			"max2ft" => "",
+			"print_barcode" => "1",
+			"print_imb" => "1",
+			"machinability" => "MACHINABLE",
+			"weight_value" => ".2",
+			"weight_unit" => "OUNCES",
+			"weight_based_on" => "1",
+			"mail_permit_type" => "PROFIT",
+			"mail_pay_method" => "IMPRINT",
+			"include_non_zip4" => "1",
+			"include_crrt" => "0",
+			"print_reverse" => "0",
+			"entry_scf" => "0",
+			"entry_ndc" => "0",
+			"agent_or_mailer_signing_statement" => "",
+			"agent_or_mailer_company" => "",
+			"agent_or_mailer_phone" => "",
+			"agent_or_mailer_email" => "",
+			"mailing_agent_name_address" => "",
+			"mailing_agent_phone" => "",
+			"mailing_agent_mailer_id" => "999999",
+			"mailing_agent_crid" => "8888888",
+			"mailing_agent_edoc_sender_crid" => "8888888",
+			"prepared_for_name_address" => "",
+			"prepared_for_mailer_id" => "999999",
+			"prepared_for_crid" => "8888888",
+			"prepared_for_nonprofit_authorization_number" => "",
+			"permit_holder_name_address" => "",
+			"permit_holder_phone" => "8054617300",
+			"permit_holder_mailer_id" => "999999",
+			"permit_holder_crid" => "8888888",
+			"statement_number" => "1",
+			"mailing_date" => "08/20/2014",
+			"mail_permit_number" => "199",
+			"net_postage_due_permit_number" => "",
+			"postage_affixed" => "",
+			"exact_postage" => "",
+			"imb_default_mid" => "999999",
+			"imb_mid" => "999999",
+			"imb_starting_serial_number" => "",
+			"imb_service_type" => "270",
+			"maildat_pdr" => "0",
+			"maildat_mpu_name" => "JOB1",
+			"maildat_mpu_description" => "TEST JOB",
+			"accutrace_job_description" => "TEST JOB",
+			"accutrace_job_id" => "123456",
+			"accutrace_job_id2" => "789",
+			"accutrace_notice_email" => "",
+			"accutrace_customer_id" => "",
+			"accutrace_api_key" => "",
+			"format" => "UPPER",
+			"list_owner_paf_id" => "E00001",
+			"list_owner_information" => "company|address|city|state|zip+4|telephone|naics|email|name|title|08/01/2014",
+			"total_postage" => "",
+			"postage_saved" => "",
+			"First_Class_Card" => "",
+			"First_Class_Letter" => "",
+			"First_Class_Flat" => "",
+			"Standard_Card" => "",
+			"Standard_Letter" => "",
+			"Standard_Flat" => "",
+			"northsouth" => "4"		
+		);	
+			
+		$preparedData = json_encode( $quoteUpdate );
+		curl_setopt( $curl, CURLOPT_URL, $url );				
+		curl_setopt( $curl, CURLOPT_CUSTOMREQUEST, "PUT" );
+		curl_setopt( $curl, CURLOPT_HEADER, false );
+		curl_setopt( $curl, CURLOPT_RETURNTRANSFER, true );
+		curl_setopt( $curl, CURLOPT_HTTPHEADER, array( 'Content-Type: application/json' ) );
+		curl_setopt( $curl, CURLOPT_POSTFIELDS, $preparedData );
+
+		// Make the REST call, returning the result
+		$response = curl_exec( $curl );	
+		echo "<br/>";		
+		echo "QUOTE updated!";		
 		
-	$preparedData = json_encode( $quoteUpdate );
-	curl_setopt( $curl, CURLOPT_URL, $url );				
-	curl_setopt( $curl, CURLOPT_CUSTOMREQUEST, "PUT" );
-	curl_setopt( $curl, CURLOPT_HEADER, false );
-	curl_setopt( $curl, CURLOPT_RETURNTRANSFER, true );
-	curl_setopt( $curl, CURLOPT_HTTPHEADER, array( 'Content-Type: application/json' ) );
-	curl_setopt( $curl, CURLOPT_POSTFIELDS, $preparedData );
+	// 	get QUOTE	
+		$service_url = $baseURL.'/servoy-service/rest_ws/ws_360/job/'.$bodyVarObj->guid.'/QUOTE';
+		$curl = curl_init($service_url);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+		$curl_response = curl_exec($curl);
+		if ($curl_response === false) 
+		{
+			$info = curl_getinfo($curl);
+			curl_close($curl);
+			die('error occured during curl exec. Additioanl info: ' . var_export($info));
+		}
+		curl_close($curl);
+//		echo $curl_response;
 
-	// Make the REST call, returning the result
-	$response = curl_exec( $curl );
-//	echo $response;	
-
-	
-// 	get QUOTE	
-	$service_url = $baseURL.'/servoy-service/rest_ws/ws_360/job/'.$bodyVarObj->guid.'/QUOTE';
-	$curl = curl_init($service_url);
-	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-	$curl_response = curl_exec($curl);
-	if ($curl_response === false) 
-	{
-	    $info = curl_getinfo($curl);
-	    curl_close($curl);
-	    die('error occured during curl exec. Additioanl info: ' . var_export($info));
+	//	get CASS-NCOA-DUPS_01-PRESORT
+		$service_url = $baseURL.'/servoy-service/rest_ws/ws_360/job/'.$bodyVarObj->guid.'/CASS-NCOA-DUPS_01-PRESORT';
+		$curl = curl_init($service_url);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+		$curl_response = curl_exec($curl);
+		if ($curl_response === false) 
+		{
+			$info = curl_getinfo($curl);
+			curl_close($curl);
+			die('error occured during curl exec. Additioanl info: ' . var_export($info));
+		}
+		curl_close($curl);	
+		echo "<br/>";
+		echo $curl_response;		
+		$link_address = $baseURL.'/ws_360_webapps/v2_0/download.jsp?guid='.$bodyVarObj->guid.'&ftype=prev.csv';		
+		echo "<br/>";
+		echo "Results should be available for download after approximately 2 minutes of asynchronous processing on below link: <br/>";
+		echo "<a href='$link_address'>Direct Mail Result</a>";
 	}
-	curl_close($curl);
-//	echo $curl_response;
-
-//	get CASS-NCOA-DUPS_01-PRESORT
-	$service_url = $baseURL.'/servoy-service/rest_ws/ws_360/job/'.$bodyVarObj->guid.'/CASS-NCOA-DUPS_01-PRESORT';
-	$curl = curl_init($service_url);
-	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-	$curl_response = curl_exec($curl);
-	if ($curl_response === false) 
-	{
-	    $info = curl_getinfo($curl);
-	    curl_close($curl);
-	    die('error occured during curl exec. Additioanl info: ' . var_export($info));
-	}
-	curl_close($curl);
-	echo $curl_response;	
 }
 ?>

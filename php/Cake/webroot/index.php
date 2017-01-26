@@ -83,107 +83,115 @@ use Cake\Network\Http\FormData;
 	$bodyVar = $response->body();
 	echo $bodyVar;
 	$bodyVarObj = json_decode( $bodyVar );
-	echo ( $bodyVarObj->guid );
 	
-//	Direct Mail PUT update QUOTE
-	$http = new Client();
-	$quoteUpdate = '{
-		"success": "true",
-		"presort_class": "FIRST CLASS",
-		"drop_zip": "93422",
-		"mail_piece_size": "CARD",
-		"piece_height": "4.00",
-		"piece_length": "5.00",
-		"thickness_value": ".009",
-		"thickness_based_on": "1",
-		"tray_type": "MMM",
-		"calculate_container_volume": "1",
-		"min1ft": "",
-		"max1ft": "",
-		"min2ft": "",
-		"max2ft": "",
-		"print_barcode": "1",
-		"print_imb": "1",
-		"machinability": "MACHINABLE",
-		"weight_value": ".2",
-		"weight_unit": "OUNCES",
-		"weight_based_on": "1",
-		"mail_permit_type": "PROFIT",
-		"mail_pay_method": "IMPRINT",
-		"include_non_zip4": "1",
-		"include_crrt": "0",
-		"print_reverse": "0",
-		"entry_scf": "0",
-		"entry_ndc": "0",
-		"agent_or_mailer_signing_statement": "",
-		"agent_or_mailer_company": "",
-		"agent_or_mailer_phone": "",
-		"agent_or_mailer_email": "",
-		"mailing_agent_name_address": "",
-		"mailing_agent_phone": "",
-		"mailing_agent_mailer_id": "999999",
-		"mailing_agent_crid": "8888888",
-		"mailing_agent_edoc_sender_crid": "8888888",
-		"prepared_for_name_address": "",
-		"prepared_for_mailer_id": "999999",
-		"prepared_for_crid": "8888888",
-		"prepared_for_nonprofit_authorization_number": "",
-		"permit_holder_name_address": "",
-		"permit_holder_phone": "",
-		"permit_holder_mailer_id": "999999",
-		"permit_holder_crid": "8888888",
-		"statement_number": "1",
-		"mailing_date": "08/20/2014",
-		"mail_permit_number": "199",
-		"net_postage_due_permit_number": "",
-		"postage_affixed": "",
-		"exact_postage": "",
-		"imb_default_mid": "999999",
-		"imb_mid": "999999",
-		"imb_starting_serial_number": "",
-		"imb_service_type": "270",
-		"maildat_pdr": "0",
-		"maildat_mpu_name": "JOB1",
-		"maildat_mpu_description": "TEST JOB",
-		"accutrace_job_description": "TEST JOB",
-		"accutrace_job_id": "123456",
-		"accutrace_job_id2": "789",
-		"accutrace_notice_email": "",
-		"accutrace_customer_id": "",
-		"accutrace_api_key": "",
-		"format": "UPPER",
-		"list_owner_paf_id": "E00001",
-		"list_owner_information": "company|address|city|state|zip+4|telephone|naics|email|name|title|08/01/2014",
-		"total_postage": "",
-		"postage_saved": "",
-		"First_Class_Card": "",
-		"First_Class_Letter": "",
-		"First_Class_Flat": "",
-		"Standard_Card": "",
-		"Standard_Letter": "",
-		"Standard_Flat": "",
-		"northsouth":"4"
-	}';
-					
-    $request = array(
-        'header' => array(
-            'Content-Type' => 'application/json',
-        ),
-    );					
+	if( isset( $bodyVarObj->guid ) )
+	{
+	//	Direct Mail PUT update QUOTE
+		$http = new Client();
+		$quoteUpdate = '{
+			"success": "true",
+			"presort_class": "FIRST CLASS",
+			"drop_zip": "93422",
+			"mail_piece_size": "CARD",
+			"piece_height": "4.00",
+			"piece_length": "5.00",
+			"thickness_value": ".009",
+			"thickness_based_on": "1",
+			"tray_type": "MMM",
+			"calculate_container_volume": "1",
+			"min1ft": "",
+			"max1ft": "",
+			"min2ft": "",
+			"max2ft": "",
+			"print_barcode": "1",
+			"print_imb": "1",
+			"machinability": "MACHINABLE",
+			"weight_value": ".2",
+			"weight_unit": "OUNCES",
+			"weight_based_on": "1",
+			"mail_permit_type": "PROFIT",
+			"mail_pay_method": "IMPRINT",
+			"include_non_zip4": "1",
+			"include_crrt": "0",
+			"print_reverse": "0",
+			"entry_scf": "0",
+			"entry_ndc": "0",
+			"agent_or_mailer_signing_statement": "",
+			"agent_or_mailer_company": "",
+			"agent_or_mailer_phone": "",
+			"agent_or_mailer_email": "",
+			"mailing_agent_name_address": "",
+			"mailing_agent_phone": "",
+			"mailing_agent_mailer_id": "999999",
+			"mailing_agent_crid": "8888888",
+			"mailing_agent_edoc_sender_crid": "8888888",
+			"prepared_for_name_address": "",
+			"prepared_for_mailer_id": "999999",
+			"prepared_for_crid": "8888888",
+			"prepared_for_nonprofit_authorization_number": "",
+			"permit_holder_name_address": "",
+			"permit_holder_phone": "",
+			"permit_holder_mailer_id": "999999",
+			"permit_holder_crid": "8888888",
+			"statement_number": "1",
+			"mailing_date": "08/20/2014",
+			"mail_permit_number": "199",
+			"net_postage_due_permit_number": "",
+			"postage_affixed": "",
+			"exact_postage": "",
+			"imb_default_mid": "999999",
+			"imb_mid": "999999",
+			"imb_starting_serial_number": "",
+			"imb_service_type": "270",
+			"maildat_pdr": "0",
+			"maildat_mpu_name": "JOB1",
+			"maildat_mpu_description": "TEST JOB",
+			"accutrace_job_description": "TEST JOB",
+			"accutrace_job_id": "123456",
+			"accutrace_job_id2": "789",
+			"accutrace_notice_email": "",
+			"accutrace_customer_id": "",
+			"accutrace_api_key": "",
+			"format": "UPPER",
+			"list_owner_paf_id": "E00001",
+			"list_owner_information": "company|address|city|state|zip+4|telephone|naics|email|name|title|08/01/2014",
+			"total_postage": "",
+			"postage_saved": "",
+			"First_Class_Card": "",
+			"First_Class_Letter": "",
+			"First_Class_Flat": "",
+			"Standard_Card": "",
+			"Standard_Letter": "",
+			"Standard_Flat": "",
+			"northsouth":"4"
+		}';
+						
+		$request = array(
+			'header' => array(
+				'Content-Type' => 'application/json',
+			),
+		);					
+			
+		$updateQUOTEurl = $baseURL.'/servoy-service/rest_ws/ws_360/v2_0/job/'.$bodyVarObj->guid.'/QUOTE';
+		$response = $http->put( $updateQUOTEurl, $quoteUpdate, $request );		
+		echo "<br/>";
+		echo "QUOTE updated? ".$response->statusCode();
 		
-	$updateQUOTEurl = $baseURL.'/servoy-service/rest_ws/ws_360/v2_0/job/'.$bodyVarObj->guid.'/QUOTE';
-	$response = $http->put( $updateQUOTEurl, $quoteUpdate, $request );		
+	//Direct Mail GET QUOTE
+		$getQUOTEurl = $baseURL.'/servoy-service/rest_ws/ws_360/v2_0/job/'.$bodyVarObj->guid.'/QUOTE';
+		$http = new Client();
+		$response = $http->get( $getQUOTEurl, [], [] );
+	//	echo $response->body();
 
-//Direct Mail GET QUOTE
-	$getQUOTEurl = $baseURL.'/servoy-service/rest_ws/ws_360/v2_0/job/'.$bodyVarObj->guid.'/QUOTE';
-	$http = new Client();
-	$response = $http->get( $getQUOTEurl, [], [] );
-//	echo $response->body();
-
-//Direct Mail GET CASS-NCOA-DUPS_01-PRESORT
-	$cassNcoaDups01presort = $baseURL.'/servoy-service/rest_ws/ws_360/v2_0/job/'.$bodyVarObj->guid.'/CASS-NCOA-DUPS_01-PRESORT';
-	$http = new Client();
-	$response = $http->get( $cassNcoaDups01presort, [], [] );
-	echo $response->body();
-
-	echo "DirectMail";
+	//Direct Mail GET CASS-NCOA-DUPS_01-PRESORT
+		$cassNcoaDups01presort = $baseURL.'/servoy-service/rest_ws/ws_360/v2_0/job/'.$bodyVarObj->guid.'/CASS-NCOA-DUPS_01-PRESORT';
+		$http = new Client();
+		$response = $http->get( $cassNcoaDups01presort, [], [] );
+		echo "<br/>";
+		echo $response->body();
+		
+		$link_address = $baseURL.'/ws_360_webapps/v2_0/download.jsp?guid='.$bodyVarObj->guid.'&ftype=prev.csv';		
+		echo "<br/>";
+		echo "Results should be available for download after approximately 2 minutes of asynchronous processing on below link: <br/>";
+		echo "<a href='$link_address'>Direct Mail Result</a>";		
+	}
