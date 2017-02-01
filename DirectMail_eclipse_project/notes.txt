@@ -6,3 +6,5 @@
 			 * your API KEY
 			 */
 			AccuZipDirectMailJavaClientExample ac = new AccuZipDirectMailJavaClientExample("your api key");
+			
+			junk
