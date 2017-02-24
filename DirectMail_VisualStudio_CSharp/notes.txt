@@ -1,0 +1,14 @@
+Download from https://github.com/accuzip-opensource/direct-mail/tree/DirectMail_visual_studio 
+
+(1) Prerequistes
+	 NuGet Package Manager (if you don't have it then in visual studio goto "Tools/Extension Manager" look for NuGet (install it)
+
+(2) From visual studio "File/Open/Project/Solution
+
+(3) Edit the Program.cs => replace your api key with a real api_key
+
+	 AccuZipDirectMailCsharpClientExample azdm = new AccuZipDirectMailCsharpClientExample("your api_key");
+   
+   
+ 
+  
