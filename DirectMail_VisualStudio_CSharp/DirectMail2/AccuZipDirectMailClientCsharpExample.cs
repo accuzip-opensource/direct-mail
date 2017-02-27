@@ -10,6 +10,8 @@ using Newtonsoft;
 /**
  * AccuZip Direct Mail rest web service C# example.<br>
  * <br>
+ * This program is provided only for the purpose of an example. Not for production use.<br> 
+ * <br>
  * web service calls<br>
  * upLoadFile(FileInfo input_file) - https://speca.io/accuzip/accuzip-360#upload-file<br>
  * getQuote(string guid) - https://speca.io/accuzip/accuzip-360#get-quote<br>

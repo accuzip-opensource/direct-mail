@@ -1,4 +1,4 @@
-Download from https://github.com/accuzip-opensource/direct-mail/tree/DirectMail_visual_studio 
+Download from https://github.com/accuzip-opensource/direct-mail
 
 (1) Prerequistes
 	 NuGet Package Manager (if you don't have it then in visual studio goto "Tools/Extension Manager" look for NuGet (install it)
