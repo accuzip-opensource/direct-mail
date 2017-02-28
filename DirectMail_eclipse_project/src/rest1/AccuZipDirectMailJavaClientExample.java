@@ -23,6 +23,8 @@ import com.sun.jersey.multipart.impl.MultiPartWriter;
 /**
  * AccuZip Direct Mail rest web service java example.<br>
  * <br>
+ * This program is for example use only. Not for production.<br>
+ * <br>
  * web service calls<br>
  * upLoadFile(File input_file) - https://speca.io/accuzip/accuzip-360#upload-file<br>
  * getQuote(String guid) - https://speca.io/accuzip/accuzip-360#get-quote<br>
